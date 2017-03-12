@@ -38,8 +38,8 @@ public class DriveLock extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	if(OI.btnUnjam.get()){
-    		Robot.driveSubsystem.doLockDrive(.2*squareWave(1.5));
+    	if(OI.sbtnShake.get()){
+    		Robot.driveSubsystem.doLockDrive(.1*sineWave(10.0));
     	}
     	else Robot.driveSubsystem.doLockDrive(0.0);
     }
@@ -47,7 +47,7 @@ public class DriveLock extends Command
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() 
     {
-    	if( OI.btnDriveLock.get() || OI.btnUnjam.get())
+    	if( OI.btnDriveLock.get() || OI.sbtnShake.get())
     	{
     		// Stay in state
     		return false; 
@@ -75,6 +75,10 @@ public class DriveLock extends Command
     protected void interrupted() 
     {
     	end();
+    }
+    
+    protected double sineWave(double f_Hz) {
+    	return Math.sin(f_Hz * (2 * Math.PI) * (System.currentTimeMillis() / 1000.0));
     }
     
     protected double squareWave(double f_Hz){
